@@ -1,45 +1,41 @@
 package com.mahiSell.controller;
 
+import com.mahiSell.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/cart")
 public class ShoppingCartController {
 
-    private Map<String, Integer> cartItems;
-
-    public ShoppingCartController() {
-        this.cartItems = new HashMap<>();
-    }
+    @Autowired
+    ShoppingCartService service;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addItemToCart(@RequestParam String itemId, @RequestParam int quantity) {
-        // Add item to cart or update quantity
-        cartItems.put(itemId, cartItems.getOrDefault(itemId, 0) + quantity);
+    public ResponseEntity<String> addItemToCart(@RequestBody String itemId, @RequestBody int quantity) {
+        service.addItemToCart(itemId, quantity);
         return ResponseEntity.ok("Item added to cart");
     }
 
     @GetMapping("/view")
     public ResponseEntity<Map<String, Integer>> viewCart() {
-        // Return the current cart items and quantities
-        return ResponseEntity.ok(cartItems);
+        return ResponseEntity.ok(service.viewCart());
     }
 
     @PostMapping("/remove")
-    public ResponseEntity<String> removeItemFromCart(@RequestParam String itemId) {
+    public ResponseEntity<String> removeItemFromCart(@RequestBody String itemId) {
         // Remove item from cart
-        cartItems.remove(itemId);
+        service.removeItemFromCart(itemId);
         return ResponseEntity.ok("Item removed from cart");
     }
 
     @PostMapping("/clear")
     public ResponseEntity<String> clearCart() {
         // Clear the entire cart
-        cartItems.clear();
+        service.clearCart();
         return ResponseEntity.ok("Cart cleared");
     }
 }
