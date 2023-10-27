@@ -1,5 +1,7 @@
 package com.mahiSell.service;
 
+import com.mahiSell.repository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,6 +11,8 @@ import java.util.Map;
 public class ShoppingCartService {
 
     private final Map<String, Integer> cartItems;
+    @Autowired
+    CartRepository repository;
 
     public ShoppingCartService() {
         this.cartItems = new HashMap<>();
