@@ -1,9 +1,17 @@
 package com.mahiSell.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cart_items")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class CartItem {
 
     @Id
@@ -15,6 +23,4 @@ public class CartItem {
 
     @Column(nullable = false)
     private int quantity;
-
-    // Constructors, getters, and setters
 }
